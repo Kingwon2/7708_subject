@@ -15,15 +15,15 @@ from utils.datasets import split_imdb_data
 
 # parameters
 batch_size = 32
-num_epochs = 1000
+num_epochs = 30
 validation_split = .2
 do_random_crop = False
 patience = 100
 num_classes = 2
 dataset_name = 'imdb'
-input_shape = (64, 64, 1)
-if input_shape[2] == 1:
-    grayscale = True
+input_shape = (64, 64, 3)
+#if input_shape[2] == 1:
+#    grayscale = True
 images_path = '../datasets/imdb_crop/'
 log_file_path = '../trained_models/gender_models/gender_training.log'
 trained_models_path = '../trained_models/gender_models/gender_mini_XCEPTION'
@@ -39,7 +39,7 @@ image_generator = ImageGenerator(ground_truth_data, batch_size,
                                  train_keys, val_keys, None,
                                  path_prefix=images_path,
                                  vertical_flip_probability=0,
-                                 grayscale=grayscale,
+                                 #grayscale=grayscale,
                                  do_random_crop=do_random_crop)
 
 # model parameters/compilation
