@@ -3,6 +3,7 @@ import sys
 import cv2
 from keras.models import load_model
 import numpy as np
+import play_music
 
 from utils.datasets import get_labels
 from utils.inference import detect_faces
@@ -68,6 +69,8 @@ for face_coordinates in faces:
     gray_face = np.expand_dims(gray_face, -1)
     emotion_label_arg = np.argmax(emotion_classifier.predict(gray_face))
     emotion_text = emotion_labels[emotion_label_arg]
+
+    play_music.getEmotion(emotion_text)
 
     if gender_text == gender_labels[0]:
         color = (0, 0, 255)
