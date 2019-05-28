@@ -19,4 +19,4 @@ def getEmotion(emotion):
     clock = pygame.time.Clock()
     while pygame.mixer.music.get_busy():
         clock.tick(30)
-    pygame.mixer.quit() 
+    pygame.mixer.quit()
