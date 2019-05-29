@@ -14,6 +14,7 @@ from models.cnn import mini_XCEPTION
 from utils.datasets import DataManager
 from utils.datasets import split_data
 from utils.preprocessor import preprocess_input
+from keras.models import load_model
 
 # parameters
 batch_size = 32
@@ -37,6 +38,15 @@ data_generator = ImageDataGenerator(
 
 # model parameters/compilation
 model = mini_XCEPTION(input_shape, num_classes)
+
+model.save('my_model.hdf5')  # creates a HDF5 file 'my_model.h5' ###~~
+del model  # deletes the existing model
+
+# returns a compiled model
+# identical to the previous one
+model = load_model('fer2013_mini_XCEPTION.39-0.66.hdf5') ###~~~###
+
+
 model.compile(optimizer='adam', loss='categorical_crossentropy',
               metrics=['accuracy'])
 model.summary()
