@@ -1,5 +1,6 @@
 import pygame
 import random
+import result
 
 def getEmotion(emotion):
     now_emotion = emotion
@@ -16,7 +17,9 @@ def getEmotion(emotion):
     pygame.mixer.music.load("../emotion_result/"+now_emotion+"/"+randMusicNum+".mp3")
     pygame.mixer.music.play()
 
+    result.bitOperation(10, 10)
+
     clock = pygame.time.Clock()
     while pygame.mixer.music.get_busy():
         clock.tick(30)
-    pygame.mixer.quit()
+    pygame.mixer.quit() 
