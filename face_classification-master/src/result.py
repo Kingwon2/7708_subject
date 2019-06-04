@@ -10,7 +10,7 @@ import time
 img = np.zeros((1000,1000, 3),np.uint8)
 b,g,r,a = 0,255,0,0
 
-def bitOperation(hpos, vpos):
+def bitOperation(hpos, vpos, L):
     img1 = cv2.imread('../images/back.png')
     img2 = cv2.imread('../images/predicted_test_image.png')
 
@@ -39,10 +39,10 @@ def bitOperation(hpos, vpos):
     img3 = img
     ## Use simsum.ttc to write Chinese.
     fontpath = "./BMJUA.ttf"
-    font = ImageFont.truetype(fontpath, 32)
+    font = ImageFont.truetype(fontpath, 20)
     img_pil = Image.fromarray(img3)
     draw = ImageDraw.Draw(img_pil)
-    draw.text((10, 550),  "마음속의 사랑은 영원히 간직해서 가져갈 \n수 있으니까 말야", font = font, fill = (b, g, r, a))
+    draw.text((10, 550),  L , font = font, fill = (b, g, r, a))
     img3 = np.array(img_pil)
 
     cv2.imshow("result", img3);cv2.waitKey();cv2.destroyAllWindows()

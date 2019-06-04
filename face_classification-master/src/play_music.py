@@ -1,6 +1,7 @@
 import pygame
 import random
 import result
+import crawling
 
 def getEmotion(emotion):
     now_emotion = emotion
@@ -17,7 +18,9 @@ def getEmotion(emotion):
     pygame.mixer.music.load("../emotion_result/"+now_emotion+"/"+randMusicNum+".mp3")
     pygame.mixer.music.play()
 
-    result.bitOperation(10, 10)
+    crawling.getText()
+    L = str(crawling.readSentence())
+    result.bitOperation(10, 10, L)
 
     clock = pygame.time.Clock()
     while pygame.mixer.music.get_busy():
