@@ -7,41 +7,16 @@ For more information please consult the [publication](https://github.com/oarriag
 
 # Emotion/gender examples:
 
-![alt tag](images/demo_results.png)
+![alt tag](face_classification-master/images/predicted_demo.png)
 
-Guided back-prop
-![alt tag](images/gradcam_results.png)
-
-Real-time demo:
-<div align='center'>
-  <img src='images/color_demo.gif' width='400px'>
-</div>
-
-[B-IT-BOTS](https://mas-group.inf.h-brs.de/?page_id=622) robotics team :)
-![alt tag](images/robocup_team.png)
-
-## Instructions
-
-### Run real-time emotion demo:
-> python3 video_emotion_color_demo.py
-
-### Run real-time guided back-prop demo:
-> python3 image_gradcam_demo.py
 
 ### Make inference on single images:
 > python3 image_emotion_gender_demo.py <image_path>
 
-e.g.
+>if you wanna listen to music and show letters, make files named [happy,sad,natural,fear,surprise,disgust] in emotion_result
 
 > python3 image_emotion_gender_demo.py ../images/test_image.jpg
 
-### Running with Docker
-
-With a few steps one can get its own face classification and detection running. Follow the commands below:
-
-* ```docker pull ekholabs/face-classifier```
-* ```docker run -d -p 8084:8084 --name=face-classifier ekholabs/face-classifier```
-* ```curl -v -F image=@[path_to_image]  http://localhost:8084/classifyImage > image.png```
 
 ### To train previous/new models for emotion classification:
 

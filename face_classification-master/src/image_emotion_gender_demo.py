@@ -3,7 +3,9 @@ import sys
 import cv2
 from keras.models import load_model
 import numpy as np
-import play_music #
+import play_music
+import test
+import time
 
 from utils.datasets import get_labels
 from utils.inference import detect_faces
@@ -15,14 +17,14 @@ from utils.inference import load_image
 from utils.preprocessor import preprocess_input
 
 # parameters for loading data and images
-image_path = sys.argv[1]           
+image_path = sys.argv[1]
 detection_model_path = '../trained_models/detection_models/haarcascade_frontalface_default.xml'
 emotion_model_path = '../trained_models/emotion_models/fer2013_mini_XCEPTION.102-0.66.hdf5'
 gender_model_path = '../trained_models/gender_models/simple_CNN.81-0.96.hdf5'
 emotion_labels = get_labels('fer2013')
 gender_labels = get_labels('imdb')
 font = cv2.FONT_HERSHEY_SIMPLEX
-emotions_counter=[0,0,0,0,0,0]
+
 # hyper-parameters for bounding boxes shape
 gender_offsets = (30, 60)
 gender_offsets = (10, 10)
@@ -44,8 +46,8 @@ gray_image = load_image(image_path, grayscale=True)
 gray_image = np.squeeze(gray_image)
 gray_image = gray_image.astype('uint8')
 
-faces = detect_faces(face_detection, gray_image)             # 얼굴 위치를 탐색 
-for face_coordinates in faces:                               
+faces = detect_faces(face_detection, gray_image)
+for face_coordinates in faces:
     x1, x2, y1, y2 = apply_offsets(face_coordinates, gender_offsets)
     rgb_face = rgb_image[y1:y2, x1:x2]
 
@@ -60,18 +62,15 @@ for face_coordinates in faces:
 
     rgb_face = preprocess_input(rgb_face, False)
     rgb_face = np.expand_dims(rgb_face, 0)
-    gender_prediction = gender_classifier.predict(rgb_face)           #성별 예측
+    gender_prediction = gender_classifier.predict(rgb_face)
     gender_label_arg = np.argmax(gender_prediction)
     gender_text = gender_labels[gender_label_arg]
-    print(gender_text)                                               #예측완료한 성별을 화면에 출력
-    gray_face = preprocess_input(gray_face, True)                     
+
+    gray_face = preprocess_input(gray_face, True)
     gray_face = np.expand_dims(gray_face, 0)
     gray_face = np.expand_dims(gray_face, -1)
-    emotion_label_arg = np.argmax(emotion_classifier.predict(gray_face))        #감정 예측
+    emotion_label_arg = np.argmax(emotion_classifier.predict(gray_face))
     emotion_text = emotion_labels[emotion_label_arg]
-    print(emotion_text)                                               #예측완료한 감정을 화면에 출력
-    emotions_counter[emotion_label_arg]+=1
-
 
     if gender_text == gender_labels[0]:
         color = (0, 0, 255)
@@ -82,9 +81,10 @@ for face_coordinates in faces:
     draw_text(face_coordinates, rgb_image, gender_text, color, 0, -20, 1, 2)
     draw_text(face_coordinates, rgb_image, emotion_text, color, 0, -50, 1, 2)
 
-representation_emotion_index=emotions_counter.index(max(emotions_counter))
-emotion_text=emotion_labels[representation_emotion_index]
-play_music.getEmotion(emotion_text)
+
 bgr_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2BGR)
 cv2.imwrite('../images/predicted_test_image.png', bgr_image)
 
+time.sleep(10)
+
+play_music.getEmotion(emotion_text)
