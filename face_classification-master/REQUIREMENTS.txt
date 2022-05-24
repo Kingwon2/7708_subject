@@ -8,5 +8,5 @@ scipy==1.0.1
 sklearn==0.0
 statistics
 tensorboard==1.7.0
-tensorflow==1.7.0
+tensorflow==2.6.4
 termcolor==1.1.0
